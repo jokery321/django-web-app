@@ -1,11 +1,16 @@
-from django.http import HttpResponse
+
 from django.shortcuts import render
+import operator
 
 # here are the functions that send you to the url you've specified
 
 
 def homepage(request):
     return render(request, 'home.html')
+
+
+def about(request):
+    return render(request, 'about.html')
 
 
 def count(request):
@@ -18,6 +23,7 @@ def count(request):
         else:
             word_dict[word] = 1
 
+    sorted_words = sorted(word_dict.items(), key=operator.itemgetter(1), reverse=True)
     return render(request, 'count.html', {'fulltext':fulltext,
-                    'count':len(word_list), 'word_dict':word_dict.items()})
+                    'count':len(word_list), 'sorted_words':sorted_words})
 
